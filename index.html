@@ -25,7 +25,37 @@
             margin: 0;
             padding: 0;
             color: var(--text-color);
-            scroll-behavior: smooth; /* Ini buat scroll jadi licin bila klik menu */
+            scroll-behavior: smooth;
+        }
+
+        /* --- MOBILE NAV BAR (Hanya Nampak di Phone) --- */
+        .mobile-header {
+            display: none; /* Default hidden di PC */
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+        }
+
+        .mobile-title {
+            font-weight: bold;
+            font-size: 16px;
         }
 
         /* --- LAYOUT UTAMA --- */
@@ -43,7 +73,8 @@
             position: fixed;
             height: 100%;
             overflow-y: auto;
-            z-index: 100;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
         }
 
         .sidebar-header {
@@ -92,11 +123,26 @@
 
         .nav-link i { margin-right: 10px; width: 20px; text-align: center;}
 
+        /* --- OVERLAY (Gelapkan background bila menu buka) --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .overlay.active { display: block; }
+
         /* --- MAIN CONTENT --- */
         .main-content {
             margin-left: var(--sidebar-width);
             flex: 1;
             padding: 40px;
+            transition: margin 0.3s;
         }
 
         h2.page-title {
@@ -112,12 +158,12 @@
             color: var(--primary-color);
             padding: 10px 15px;
             border-radius: 8px;
-            margin-top: 40px; /* Jarak lebih sikit supaya tak rapat sangat bila scroll */
+            margin-top: 40px; 
             margin-bottom: 15px;
             font-weight: bold;
             display: flex;
             align-items: center;
-            scroll-margin-top: 20px; /* Supaya header tak tertutup bila scroll */
+            scroll-margin-top: 80px; /* Jarak extra untuk mobile header */
         }
         .category-header i { margin-right: 10px; }
 
@@ -174,20 +220,44 @@
             padding-top: 20px;
         }
 
-        /* RESPONSIVE */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; padding: 20px; box-sizing: border-box; }
-            .main-content { margin-left: 0; padding: 20px; }
+            .mobile-header { display: flex; } /* Tunjuk Header */
+            
+            .sidebar { 
+                transform: translateX(-100%); /* Sorok Sidebar ke kiri */
+                width: 260px;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0); /* Masuk Sidebar bila active */
+            }
+
+            .main-content { 
+                margin-left: 0; 
+                padding: 20px; 
+                padding-top: 80px; /* Elak tertutup dek header */
+            }
+            
             .grid-panitia { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
+    <div class="mobile-header">
+        <div class="mobile-title">UNIT KURIKULUM SMKATB</div>
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="overlay" onclick="toggleMenu()"></div>
+
     <div class="app-container">
         
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <img src="logo.png" alt="Logo" class="logo-sekolah">
                 <div style="font-weight:bold; font-size:14px;">UNIT KURIKULUM</div>
@@ -195,10 +265,10 @@
             </div>
 
             <div class="menu-title">NAVIGASI JABATAN</div>
-            <a href="#bahasa" class="nav-link"><i class="fas fa-language"></i> Bahasa</a>
-            <a href="#stem" class="nav-link"><i class="fas fa-atom"></i> STEM</a>
-            <a href="#agama" class="nav-link"><i class="fas fa-quran"></i> Agama & Tahfiz</a>
-            <a href="#kemanusiaan" class="nav-link"><i class="fas fa-globe-asia"></i> Kemanusiaan</a>
+            <a href="#bahasa" class="nav-link" onclick="toggleMenu()"><i class="fas fa-language"></i> Bahasa</a>
+            <a href="#stem" class="nav-link" onclick="toggleMenu()"><i class="fas fa-atom"></i> STEM</a>
+            <a href="#agama" class="nav-link" onclick="toggleMenu()"><i class="fas fa-quran"></i> Agama & Tahfiz</a>
+            <a href="#kemanusiaan" class="nav-link" onclick="toggleMenu()"><i class="fas fa-globe-asia"></i> Kemanusiaan</a>
             
             <div class="menu-title">Aplikasi KPM</div>
             <a href="https://epremium.moe.gov.my/" target="_blank" class="nav-link"><i class="fas fa-server"></i> e-Operasi</a>
@@ -314,10 +384,23 @@
             </div>
 
             <div class="footer">
-                Unit Digital TMUA &copy; 2026 | SMKA TOK BACHOK
+                Unit Kurikulum &copy; 2026 | SMKA TOK BACHOK
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            // Cek jika skrin kecil (mobile) sahaja baru function ni jalan
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+        }
+    </script>
 
 </body>
 </html>
