@@ -25,6 +25,7 @@
             margin: 0;
             padding: 0;
             color: var(--text-color);
+            scroll-behavior: smooth; /* Ini buat scroll jadi licin bila klik menu */
         }
 
         /* --- LAYOUT UTAMA --- */
@@ -111,11 +112,12 @@
             color: var(--primary-color);
             padding: 10px 15px;
             border-radius: 8px;
-            margin-top: 30px;
+            margin-top: 40px; /* Jarak lebih sikit supaya tak rapat sangat bila scroll */
             margin-bottom: 15px;
             font-weight: bold;
             display: flex;
             align-items: center;
+            scroll-margin-top: 20px; /* Supaya header tak tertutup bila scroll */
         }
         .category-header i { margin-right: 10px; }
 
@@ -192,10 +194,11 @@
                 <div style="font-size:11px; opacity:0.8;">SMKA TOK BACHOK</div>
             </div>
 
-            <div class="menu-title">Pautan Utama</div>
-            <a href="#" class="nav-link"><i class="fas fa-home"></i> Laman Utama</a>
-            <a href="#" class="nav-link"><i class="fas fa-calendar-alt"></i> Takwim Sekolah</a>
-            <a href="#" class="nav-link"><i class="fas fa-users"></i> Carta Organisasi</a>
+            <div class="menu-title">NAVIGASI JABATAN</div>
+            <a href="#bahasa" class="nav-link"><i class="fas fa-language"></i> Bahasa</a>
+            <a href="#stem" class="nav-link"><i class="fas fa-atom"></i> STEM</a>
+            <a href="#agama" class="nav-link"><i class="fas fa-quran"></i> Agama & Tahfiz</a>
+            <a href="#kemanusiaan" class="nav-link"><i class="fas fa-globe-asia"></i> Kemanusiaan</a>
             
             <div class="menu-title">Aplikasi KPM</div>
             <a href="https://epremium.moe.gov.my/" target="_blank" class="nav-link"><i class="fas fa-server"></i> e-Operasi</a>
@@ -206,7 +209,7 @@
         <div class="main-content">
             <h2 class="page-title">e-FOLDER PANITIA MATA PELAJARAN</h2>
 
-            <div class="category-header"><i class="fas fa-language"></i> JABATAN BAHASA</div>
+            <div id="bahasa" class="category-header"><i class="fas fa-language"></i> JABATAN BAHASA</div>
             <div class="grid-panitia">
                 <a href="https://drive.google.com/drive/folders/16M1v4WqU91wGBR9GNZmwE_YhcSKfvdRd?usp=drive_link" target="_blank" class="card">
                     <i class="fas fa-book"></i>
@@ -226,7 +229,7 @@
                 </a>
             </div>
 
-            <div class="category-header"><i class="fas fa-atom"></i> JABATAN STEM</div>
+            <div id="stem" class="category-header"><i class="fas fa-atom"></i> JABATAN STEM</div>
             <div class="grid-panitia">
                 <a href="https://drive.google.com/drive/folders/1AjRQa5v0VKBTTv2GhsGD_00AyHGOMq9H?usp=drive_link" target="_blank" class="card">
                     <i class="fas fa-flask"></i>
@@ -254,7 +257,7 @@
                 </a>
             </div>
 
-            <div class="category-header"><i class="fas fa-quran"></i> JABATAN AGAMA & TAHFIZ</div>
+            <div id="agama" class="category-header"><i class="fas fa-quran"></i> JABATAN AGAMA & TAHFIZ</div>
             <div class="grid-panitia">
                 <a href="https://drive.google.com/drive/folders/1ZTo3uxAHX_6CjmiGS6wUkUHkS3stzvrG?usp=drive_link" target="_blank" class="card">
                     <i class="fas fa-praying-hands"></i>
@@ -278,7 +281,7 @@
                 </a>
             </div>
 
-            <div class="category-header"><i class="fas fa-shapes"></i> KEMANUSIAAN & TEKNIKAL</div>
+            <div id="kemanusiaan" class="category-header"><i class="fas fa-shapes"></i> KEMANUSIAAN & TEKNIKAL</div>
             <div class="grid-panitia">
                 <a href="https://drive.google.com/drive/folders/1OeCWzpErwPoIpJDtA1oCZ7BtrxkaKwXh?usp=drive_link" target="_blank" class="card">
                     <i class="fas fa-landmark"></i>
@@ -311,7 +314,7 @@
             </div>
 
             <div class="footer">
-                Unit Kurikulum &copy; 2026 | SMKA TOK BACHOK
+                Unit Digital TMUA &copy; 2026 | SMKA TOK BACHOK
             </div>
         </div>
     </div>
