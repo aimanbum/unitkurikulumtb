@@ -28,6 +28,33 @@
             scroll-behavior: smooth;
         }
 
+        /* --- STYLE JAM DIGITAL (BARU TAMBAH) --- */
+        .clock-widget {
+            background: rgba(255, 255, 255, 0.1); /* Kotak lutsinar */
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .clock-time {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent-color); /* Warna kuning emas */
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace; /* Font ala digital */
+            margin-bottom: 5px;
+        }
+
+        .clock-date {
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* --- MOBILE NAV BAR (Hanya Nampak di Phone) --- */
         .mobile-header {
             display: none; /* Default hidden di PC */
@@ -262,6 +289,11 @@
                 <img src="logo.png" alt="Logo" class="logo-sekolah">
                 <div style="font-weight:bold; font-size:14px;">UNIT KURIKULUM</div>
                 <div style="font-size:11px; opacity:0.8;">SMKA TOK BACHOK</div>
+                
+                <div class="clock-widget">
+                    <div class="clock-time" id="clock">00:00:00</div>
+                    <div class="clock-date" id="date">MEMUATKAN...</div>
+                </div>
             </div>
 
             <div class="menu-title">NAVIGASI JABATAN</div>
@@ -390,16 +422,46 @@
     </div>
 
     <script>
+        // Fungsi Toggle Menu untuk Mobile
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
             
-            // Cek jika skrin kecil (mobile) sahaja baru function ni jalan
             if (window.innerWidth <= 768) {
                 sidebar.classList.toggle('active');
                 overlay.classList.toggle('active');
             }
         }
+
+        // --- FUNGSI JAM DIGITAL BARU ---
+        function updateClock() {
+            const now = new Date();
+
+            // Format Masa (Jam:Minit:Saat)
+            const timeString = now.toLocaleTimeString('en-GB', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+
+            // Format Tarikh (Hari, Tarikh Bulan Tahun) - Bahasa Melayu
+            const dateString = now.toLocaleDateString('ms-MY', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+
+            // Masukkan dalam HTML
+            document.getElementById('clock').innerText = timeString;
+            document.getElementById('date').innerText = dateString;
+        }
+
+        // Jalan jam setiap 1 saat (1000ms)
+        setInterval(updateClock, 1000);
+        
+        // Jalankan terus bila page load (tak perlu tunggu 1 saat)
+        updateClock();
     </script>
 
 </body>
